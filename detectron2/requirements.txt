@@ -1,7 +1,0 @@
-requests
-Pillow
-numpy
-python-dotenv
-image
-vocabulary
-opencv-python
