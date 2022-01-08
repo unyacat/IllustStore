@@ -32,7 +32,7 @@ jobs:
           context: frontend
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/illuststore_backend:latest
+            ghcr.io/${{ github.repository_owner }}/illuststore_frontend:latest
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
