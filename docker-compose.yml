@@ -23,9 +23,7 @@ services:
             - db
 
     deepdanbooru:
-        build:
-            context: ./deepdanbooru
-            dockerfile: Dockerfile
+        image: ghcr.io/unyacat/illuststore_deepdanbooru:latest
         volumes:
             - ./media/:/media/
         environment:
