@@ -1,5 +1,8 @@
 frontend/.eslintcache
 
+media/*
+data/*
+
 # macOS
 .DS_Store
 faceFeatures/*
