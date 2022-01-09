@@ -98,4 +98,4 @@ If you would like to implement a feature, please create a PR to the ```test``` b
 ## LICENSE
 * [gregordr/ImageStore](https://github.com/gregordr/ImageStore) by gregordr (Apache 2.0 [license](https://www.apache.org/licenses/LICENSE-2.0))  
 Change the target from photos to illustrations.
-* [KichangKim/DeepDanbooru](https://github.com/KichangKim/DeepDanbooru) by KichangKim (MIT [license](https://opensource.org/licenses/mit-license.php)
+* [KichangKim/DeepDanbooru](https://github.com/KichangKim/DeepDanbooru) by KichangKim (MIT [license](https://opensource.org/licenses/mit-license.php))
