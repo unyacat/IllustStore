@@ -212,12 +212,13 @@ export async function removeLabel(id: string, label: string) {
 /**
  * Edit the properties of the photo with id=@param id
  */
-export async function editMedia(id: string, name: string, date: number, x?: number, y?: number) {
+export async function editMedia(id: string, name: string, date: number, x?: number, y?: number, url?: string) {
     const requestBody = {
         name,
         date,
         x,
         y,
+        url,
     };
     await axios.post("/media/edit/" + id, requestBody);
 }

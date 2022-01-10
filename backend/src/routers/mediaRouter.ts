@@ -300,7 +300,7 @@ router.post('/add', async (req, res) => {
 
 router.post('/edit/:id', async (req, res) => {
     try {
-        await editMedia(req.params.id, req.body.name, req.body.date, req.body.x, req.body.y);
+        await editMedia(req.params.id, req.body.name, req.body.date, req.body.x, req.body.y, req.body.url);
         res.status(200).send();
     } catch (err) {
         res.status(500).send(err.toString());

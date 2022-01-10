@@ -25,7 +25,7 @@ import {
     useMediaQuery,
     useTheme,
 } from "@material-ui/core";
-import { ChevronLeft, ChevronRight, Close, Label, PhotoOutlined, AddCircle, Map, Edit, Warning, Face } from "@material-ui/icons";
+import { ChevronLeft, ChevronRight, Close, Label, PhotoOutlined, AddCircle, Link, Map, Edit, Warning, Face } from "@material-ui/icons";
 import clsx from "clsx";
 import { PhotoT } from "../../Interfaces";
 import { addLabel, baseURL, Box, editMedia, getBoxes, getPhotoLabels, removeLabel } from "../../API";
@@ -213,10 +213,11 @@ export default function ViewPage(props: { photos: PhotoT[]; setViewId: (arg0: st
 
     const hideArrows = useMediaQuery(theme.breakpoints.down("sm"));
 
-    const editPropsCb = async (name: string, date: number) => {
-        editMedia(id, name, date, props.photos[index].coordx, props.photos[index].coordy);
+    const editPropsCb = async (name: string, date: number, url: string) => {
+        editMedia(id, name, date, props.photos[index].coordx, props.photos[index].coordy, url);
         props.photos[index].name = name;
         props.photos[index].date = date;
+        props.photos[index].url  = url;
     };
 
     const editLocationCb = async (x?: number, y?: number) => {
@@ -362,6 +363,28 @@ export default function ViewPage(props: { photos: PhotoT[]; setViewId: (arg0: st
                         </IconButton>
                     </ListItem>
 
+                    {/* URL */}
+                    <ListItem>
+                        <ListItemIcon>
+                            <Link />
+                        </ListItemIcon>
+                        <ListItemText primary="URL" secondary=" " />
+                        <IconButton onClick={() => setEditPropsOpen(true)}>
+                            <Edit></Edit>
+                        </IconButton>
+                    </ListItem>
+                    <ListItem>
+                        <div style = {{
+                            width: "100%",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            marginTop: -15
+                        }}>
+                            <a href={photo ? photo.url : ""}>{photo ? photo.url : ""}</a>
+                        </div>
+                    </ListItem>
+
                     {/* Labels */}
                     <ListItem>
                         <ListItemIcon>
@@ -399,8 +422,10 @@ export default function ViewPage(props: { photos: PhotoT[]; setViewId: (arg0: st
                         </ul>
                     </ListItem>
 
+
+
                     {/* Faces */}
-                    <ListItem>
+                    {/* <ListItem>
                         <ListItemIcon>
                             <Face />
                         </ListItemIcon>
@@ -433,10 +458,10 @@ export default function ViewPage(props: { photos: PhotoT[]; setViewId: (arg0: st
                                 </>
                             )}
                         </ul>
-                    </ListItem>
+                    </ListItem> */}
 
                     {/* Map */}
-                    <ListItem>
+                    {/* <ListItem>
                         <ListItemIcon>
                             <Map />
                         </ListItemIcon>
@@ -482,7 +507,7 @@ export default function ViewPage(props: { photos: PhotoT[]; setViewId: (arg0: st
                                 <Marker position={[photo.coordx, photo.coordy]}></Marker>
                             </MapContainer>
                         )}
-                    </ListItem>
+                    </ListItem> */}
                 </List>
             </Drawer>
             <EditPropsDialog open={editPropsOpen} setOpen={setEditPropsOpen} cb={editPropsCb} photo={props.photos[index]} />

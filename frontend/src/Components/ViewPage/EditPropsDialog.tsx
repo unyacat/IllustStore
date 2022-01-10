@@ -22,11 +22,12 @@ const useStyles = makeStyles({
     },
 });
 
-export default function EditPropsDialog(props: { cb: (name: string, number: number) => any; setOpen: (arg0: boolean) => any; open: boolean; photo: PhotoT }) {
+export default function EditPropsDialog(props: { cb: (name: string, number: number, url: string) => any ; setOpen: (arg0: boolean) => any; open: boolean; photo: PhotoT }) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const [name, setName] = useState("");
     const [date, setDate] = useState(moment.utc().format("YYYY-MM-DDTHH:mm:ss"));
+    const [url, setUrl]   = useState("");
 
     useEffect(() => {
         setName(props.photo?.name);
@@ -34,8 +35,9 @@ export default function EditPropsDialog(props: { cb: (name: string, number: numb
     }, [props.photo]);
 
     const handleClose = (execute: boolean) => async () => {
-        if (execute && isDateCorrect() && isNameCorrect() && (name !== props.photo.name || date !== moment.unix(props.photo.date).format("YYYY-MM-DDTHH:mm:ss")))
-            await props.cb(name, moment(date).unix());
+        if (execute && isDateCorrect() && isNameCorrect() && isUrlCorrect()
+            && (name !== props.photo.name || date !== moment.unix(props.photo.date).format("YYYY-MM-DDTHH:mm:ss") || url !== props.photo.url))
+            await props.cb(name, moment(date).unix(), url);
         setName(props.photo?.name);
         if (props.photo) setDate(moment.unix(props.photo.date).format("YYYY-MM-DDTHH:mm:ss"));
         await props.setOpen(false);
@@ -48,6 +50,11 @@ export default function EditPropsDialog(props: { cb: (name: string, number: numb
     const isDateCorrect = () => {
         return moment(date).unix() ? true : false;
     };
+
+    const isUrlCorrect = () => {
+        // Not only URLs at the moment.
+        return true
+    }
 
     return (
         <div>
@@ -99,6 +106,18 @@ export default function EditPropsDialog(props: { cb: (name: string, number: numb
                                 shrink: true,
                             }}
                         />
+                        <TextField
+                            id="url"
+                            label="URL"
+                            type="text"
+                            value={url}
+                            onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                setUrl(event.target.value);
+                            }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
                         <div style={{ marginTop: 10, color: "red" }}>{isDateCorrect() || "Invalid date"}</div>
                         <div style={{ color: "red" }}>{isNameCorrect() || "Invalid name"}</div>
                     </div>
@@ -107,7 +126,7 @@ export default function EditPropsDialog(props: { cb: (name: string, number: numb
                     <Button onClick={handleClose(false)} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleClose(true)} color="primary" autoFocus disabled={!isNameCorrect() || !isDateCorrect()}>
+                    <Button onClick={handleClose(true)} color="primary" autoFocus disabled={!isNameCorrect() || !isDateCorrect() || !isUrlCorrect() }>
                         Ok
                     </Button>
                 </DialogActions>

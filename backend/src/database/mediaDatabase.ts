@@ -7,12 +7,13 @@ export const media = (async () => {
     await addColumn(media, "type", "text", true, "photo", false);
     await addColumn(media, "coordX", "float", false, null, false)
     await addColumn(media, "coordY", "float", false, null, false)
+    await addColumn(media, "url", "text", false, null, false)
     return media;
 })()
 
 export async function getMedia(searchTerm: string, label: string): Promise<unknown[]> {
     return transaction(async (client) => {
-        const result = await client.query(`SELECT OID::text as id, ${photo} as name, h as height, w as width, date as date, type as type, coordX as coordX, coordY as coordY FROM ${await media} WHERE         
+        const result = await client.query(`SELECT OID::text as id, ${photo} as name, h as height, w as width, date as date, type as type, coordX as coordX, coordY as coordY, url as url FROM ${await media} WHERE         
         (
             ${photo} like $1::text
             OR
@@ -29,16 +30,16 @@ export async function getMedia(searchTerm: string, label: string): Promise<unkno
     });
 }
 
-export async function addMedia(name: string, heigth: number, width: number, date: number, type: string, coordX?: number, coordY?: number): Promise<string> {
+export async function addMedia(name: string, heigth: number, width: number, date: number, type: string, coordX?: number, coordY?: number, url?: string): Promise<string> {
     return transaction(async (client) => {
-        const res = await client.query(`INSERT INTO ${await media} VALUES ($1::text, $2::integer, $3::integer, false, $4::integer, $5::text, $6::float, $7::float);`, [name, heigth, width, Math.floor(date / 1000), type, coordX, coordY])
+        const res = await client.query(`INSERT INTO ${await media} VALUES ($1::text, $2::integer, $3::integer, false, $4::integer, $5::text, $6::float, $7::float, $8::text);`, [name, heigth, width, Math.floor(date / 1000), type, coordX, coordY, url])
         return res.oid.toString();
     });
 }
 
-export async function editMedia(oid: string, name: string, date: number, coordX?: number, coordY?: number): Promise<void> {
+export async function editMedia(oid: string, name: string, date: number, coordX?: number, coordY?: number, url?:string): Promise<void> {
     return await transaction(async (client) => {
-        (await client.query(`UPDATE ${await media} SET photo=$2::text, date=$3::integer, coordX=$4::float, coordY=$5::float WHERE OID = $1::OID;`, [oid, name, date, coordX, coordY]));
+        (await client.query(`UPDATE ${await media} SET photo=$2::text, date=$3::integer, coordX=$4::float, coordY=$5::float, url=$6::text WHERE OID = $1::OID;`, [oid, name, date, coordX, coordY, url]));
     })
 }
 

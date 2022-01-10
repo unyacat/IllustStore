@@ -14,4 +14,5 @@ export interface PhotoT {
     coordx?: number;
     coordy?: number;
     type: "photo" | "video";
+    url?: string;
 }
