@@ -180,6 +180,7 @@ router.post('/add', async (req, res) => {
 
                     const coordX: number = (await exifr.parse(dir + f.filename))?.latitude;
                     const coordY: number = (await exifr.parse(dir + f.filename))?.longitude;
+                    const source_url: string = req.body.source_url as string || "";
 
                     let date;
                     try {
@@ -194,7 +195,7 @@ router.post('/add', async (req, res) => {
                     }
 
 
-                    const oid = await addMedia(f.originalname, dims.height, dims.width, (date.toString() === 'NaN') ? Date.now() : date, "photo", coordX, coordY)
+                    const oid = await addMedia(f.originalname, dims.height, dims.width, (date.toString() === 'NaN') ? Date.now() : date, "photo", coordX, coordY, source_url)
 
                     await fsPromises.rename(dir + f.filename, dir + oid);
 
