@@ -21,8 +21,6 @@ export default function AutocompleteSearchBar(props: any) {
             options={props.options}
             key={key.toString()}
             onChange={async (event: any, newValue: any) => {
-                console.log(...newValue);
-                console.log(typeof(newValue));
                 setValue(newValue.join(" "));
                 props.search(newValue.join(" "))();
             }}
@@ -40,8 +38,6 @@ export default function AutocompleteSearchBar(props: any) {
                             className={props.onlyMobile}
                             value={value}
                             onChange={(newValue) => {
-                                console.log("onChange newValue: " + newValue);
-                                console.log(typeof(newValue))
                                 if (newValue === "")
                                     setValue("");
                                     props.search("")();
