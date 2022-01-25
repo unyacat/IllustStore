@@ -9,3 +9,5 @@ faceFeatures/*
 imageFeatures/*
 autoImport/node_modules/*
 import/*
+
+*.code-workspace

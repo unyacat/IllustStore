@@ -1,24 +1,30 @@
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import SearchBar from "material-ui-search-bar";
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 const filterOptions = createFilterOptions({
     limit: 6
 });
 
+
 export default function AutocompleteSearchBar(props: any) {
     const value = props.value;
     const setValue = props.onChange;
+    const [key, setKey] = useState(false);
     return (
         <Autocomplete
+            multiple
             filterOptions={filterOptions}
             className={props.className}
             style={props.style}
             freeSolo
             options={props.options}
+            key={key.toString()}
             onChange={async (event: any, newValue: any) => {
-                setValue(newValue);
-                props.search(newValue)();
+                console.log(...newValue);
+                console.log(typeof(newValue));
+                setValue(newValue.join(" "));
+                props.search(newValue.join(" "))();
             }}
             renderInput={(params: any) => {
                 return (
@@ -28,14 +34,18 @@ export default function AutocompleteSearchBar(props: any) {
                             onCancelSearch={async () => {
                                 setValue("");
                                 props.search("")();
+                                setKey(!key);
                             }}
                             style={props.style}
                             className={props.onlyMobile}
                             value={value}
                             onChange={(newValue) => {
+                                console.log("onChange newValue: " + newValue);
+                                console.log(typeof(newValue))
                                 if (newValue === "")
+                                    setValue("");
                                     props.search("")();
-                                params.inputProps.onChange({ target: { value: newValue } });
+                                params.inputProps.onChange({ target: { value: newValue.split(" ").slice(-1)[0] } });
                                 setValue(newValue)
                             }}
                             onRequestSearch={props.onRequestSearch}

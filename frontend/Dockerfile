@@ -2,7 +2,7 @@ FROM node:lts
 WORKDIR /code
 EXPOSE 3000
 COPY package*.json ./
-RUN npm i
+RUN npm i --legacy-peer-deps
 COPY . .
 ARG REACT_APP_DOCKER=true
 ENV REACT_APP_DOCKER=$REACT_APP_DOCKER
