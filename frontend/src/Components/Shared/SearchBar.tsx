@@ -1,6 +1,6 @@
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
 import SearchBar from "material-ui-search-bar";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const filterOptions = createFilterOptions({
     limit: 6
