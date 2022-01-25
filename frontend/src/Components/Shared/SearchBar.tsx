@@ -39,7 +39,6 @@ export default function AutocompleteSearchBar(props: any) {
                             value={value}
                             onChange={(newValue) => {
                                 if (newValue === "")
-                                    setValue("");
                                     props.search("")();
                                 params.inputProps.onChange({ target: { value: newValue.split(" ").slice(-1)[0] } });
                                 setValue(newValue)
