@@ -1,4 +1,5 @@
 import { Autocomplete, createFilterOptions } from "@material-ui/lab";
+import { TextField } from "@material-ui/core";
 import SearchBar from "material-ui-search-bar";
 import React, { useState } from "react";
 
@@ -24,34 +25,42 @@ export default function AutocompleteSearchBar(props: any) {
                 setValue(newValue.join(" "));
                 props.search(newValue.join(" "))();
             }}
-            renderInput={(params: any) => {
-                return (
-                    <>
-                        <SearchBar
-                            {...{ ...params.inputProps, ref: null }}
-                            onCancelSearch={async () => {
-                                setValue("");
-                                props.search("")();
-                                setKey(!key);
-                            }}
-                            style={props.style}
-                            className={props.onlyMobile}
-                            value={value}
-                            onChange={(newValue) => {
-                                if (newValue === "")
-                                    props.search("")();
-                                params.inputProps.onChange({ target: { value: newValue.split(" ").slice(-1)[0] } });
-                                setValue(newValue)
-                            }}
-                            onRequestSearch={props.onRequestSearch}
-                        />
-                        <div ref={params.InputProps.ref}>
-                            <div {...params.inputProps} />
-                        </div>
-                    </>
-                )
-            }
-            }
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Search..."
+                    placeholder="Tags"
+                />
+            )}
+            // renderInput={(params: any) => {
+            //     return (
+            //         <>
+            //             <SearchBar
+            //                 {...{ ...params.inputProps, ref: null }}
+            //                 onCancelSearch={async () => {
+            //                     setValue("");
+            //                     props.search("")();
+            //                     setKey(!key);
+            //                 }}
+            //                 style={props.style}
+            //                 className={props.onlyMobile}
+            //                 value={value}
+            //                 onChange={(newValue) => {
+            //                     if (newValue === "")
+            //                         props.search("")();
+            //                     params.inputProps.onChange({ target: { value: newValue.split(" ").slice(-1)[0] } });
+            //                     setValue(newValue)
+            //                 }}
+            //                 onRequestSearch={props.onRequestSearch}
+            //             />
+            //             <div ref={params.InputProps.ref}>
+            //                 <div {...params.inputProps} />
+            //             </div>
+            //         </>
+            //     )
+            // }
+            // }
         />
     )
 }
